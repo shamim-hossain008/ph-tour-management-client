@@ -29,6 +29,7 @@ export function LoginForm({
       console.log("Login data", res);
 
       toast.success("user login successfully");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
       if (error.status === 401) {
