@@ -29,10 +29,17 @@ export function LoginForm({
       console.log("Login data", res);
 
       toast.success("user login successfully");
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
       if (error.status === 401) {
+        toast.error("Your account is not verified");
+        navigate("/verify", { state: data.email });
+      }
+      if (error.data.message === "Password does not match") {
+        toast.error("Invalid credentials");
+      }
+      if (error.data.message === "User is not verified") {
         toast.error("Your account is not verified");
         navigate("/verify", { state: data.email });
       }

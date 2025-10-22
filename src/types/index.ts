@@ -1,4 +1,4 @@
-export type { ILogin, IRegister, ISendOtp } from "./auth.type";
+export type { ILogin, IRegister, ISendOtp, IVerifyOtp } from "./auth.type";
 
 export interface IResponse<T> {
   statusCode: number;
