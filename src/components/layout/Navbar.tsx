@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Link } from "react-router";
 import { ModeToggle } from "./ModeToggler";
 
@@ -21,6 +22,8 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
+  const { data } = useUserInfoQuery(undefined);
+  console.log(data);
   return (
     <header className="border-b">
       <div className="flex container mx-auto px-4 h-16 items-center justify-between gap-4">

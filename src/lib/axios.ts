@@ -5,6 +5,7 @@ export const axiosInstance = axios.create({
   baseURL: config.baseUrl,
   //   timeout: 1000,
   //   headers: { "X-Custom-Header": "foobar" },
+  withCredentials: true,
 });
 
 // Add a request interceptor

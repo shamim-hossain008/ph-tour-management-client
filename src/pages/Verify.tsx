@@ -73,7 +73,7 @@ const Verify = () => {
       console.log(error);
     }
   };
-const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     const toastId = toast.loading("Verifying OTP");
     const userInfo = {
       email,
@@ -90,11 +90,11 @@ const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!email) {
-  //     navigate("/");
-  //   }
-  // }, [email]);
+  useEffect(() => {
+    if (!email) {
+      navigate("/");
+    }
+  }, [email,navigate]);
 
   // Resent timer  OTP
   useEffect(() => {
