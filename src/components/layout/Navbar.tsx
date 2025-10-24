@@ -11,7 +11,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import {
+  authApi,
+  useLogoutMutation,
+  useUserInfoQuery,
+} from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hook";
 import { Link } from "react-router";
 import { ModeToggle } from "./ModeToggler";
 
@@ -23,7 +28,15 @@ const navigationLinks = [
 
 export default function Navbar() {
   const { data } = useUserInfoQuery(undefined);
-  console.log(data);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  console.log(data?.data?.email);
+
+  const handleLogout = async () => {
+    await logout(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
   return (
     <header className="border-b">
       <div className="flex container mx-auto px-4 h-16 items-center justify-between gap-4">
@@ -80,9 +93,9 @@ export default function Navbar() {
           </Popover>
           {/* Main nav */}
           <div className="flex items-center gap-6">
-            <a href="#" className="text-primary hover:text-primary/90">
+            <Link to="/" className="text-primary hover:text-primary/90">
               <Logo />
-            </a>
+            </Link>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
@@ -104,9 +117,20 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <ModeToggle />
 
-          <Button asChild className="text-sm">
-            <Link to="login">Login</Link>
-          </Button>
+          {data?.data?.email && (
+            <Button
+              onClick={handleLogout}
+              variant={"outline"}
+              className="text-sm"
+            >
+              Logout
+            </Button>
+          )}
+          {!data?.data?.email && (
+            <Button asChild className="text-sm">
+              <Link to="login">Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </header>

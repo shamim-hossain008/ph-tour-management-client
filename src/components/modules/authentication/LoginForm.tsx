@@ -27,10 +27,11 @@ export function LoginForm({
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await login(data).unwrap();
-      console.log("Login data", res);
 
-      toast.success("user login successfully");
-      navigate("/");
+      if (res.success) {
+        toast.success("user login successfully");
+        navigate("/");
+      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
@@ -116,8 +117,8 @@ export function LoginForm({
           </span>
         </div>
 
-        <Button 
-        onClick={()=>window.open(`${config.baseUrl}/auth/google`)}
+        <Button
+          onClick={() => window.open(`${config.baseUrl}/auth/google`)}
           type="button"
           variant="outline"
           className="w-full cursor-pointer"
