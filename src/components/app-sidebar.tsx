@@ -13,35 +13,17 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { getSidebarItems } from "@/utils/getSidebarItems";
 import { Link } from "react-router";
 
-// This is sample data.
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      items: [
-        {
-          title: "Analytics",
-          url: "/admin/analytics",
-        },
-      ],
-    },
-    {
-      title: "Tour Management",
-      url: "#",
-      items: [
-        {
-          title: "Add Tour",
-          url: "/admin/add-tour",
-        },
-      ],
-    },
-  ],
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: userData } = useUserInfoQuery(undefined);
+  console.log(userData);
+
+  const data = {
+    navMain: getSidebarItems(userData?.data?.role),
+  };
   return (
     <Sidebar {...props}>
       <SidebarHeader>
