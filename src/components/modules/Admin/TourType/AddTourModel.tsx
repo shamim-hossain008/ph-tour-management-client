@@ -41,7 +41,7 @@ export function AddTourModel() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Tour Type</Button>
+        <Button>Add Tour Type</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -56,11 +56,7 @@ export function AddTourModel() {
                 <FormItem>
                   <FormLabel>Tour Type Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Tour Type Name"
-                      {...field}
-                      value={field.value || ""}
-                    />
+                    <Input placeholder="Tour Type Name" {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.

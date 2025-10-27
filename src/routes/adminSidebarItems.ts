@@ -24,11 +24,6 @@ export const adminSidebarItems: ISidebarItem[] = [
 
     items: [
       {
-        title: "Add Tour",
-        url: "/admin/add-tour",
-        component: AddTour,
-      },
-      {
         title: "Add Tour Type",
         url: "/admin/add-tour-type",
         component: AddTourType,
@@ -37,6 +32,11 @@ export const adminSidebarItems: ISidebarItem[] = [
         title: "Add Division",
         url: "/admin/add-division",
         component: AddDivision,
+      },
+      {
+        title: "Add Tour",
+        url: "/admin/add-tour",
+        component: AddTour,
       },
     ],
   },

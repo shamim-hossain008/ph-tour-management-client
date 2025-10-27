@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import Logo from "@/assets/icons/Logo";
 import {
   Sidebar,
@@ -15,18 +13,19 @@ import {
 } from "@/components/ui/sidebar";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { getSidebarItems } from "@/utils/getSidebarItems";
+import * as React from "react";
 import { Link } from "react-router";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: userData } = useUserInfoQuery(undefined);
-  console.log(userData);
 
   const data = {
     navMain: getSidebarItems(userData?.data?.role),
   };
+
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="items-center">
         <Link to="/">
           <Logo />
         </Link>
