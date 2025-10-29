@@ -34,7 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
 import { useGetTourTypeQuery } from "@/redux/features/Tour/tour.api";
-import { format } from "date-fns";
+import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
@@ -68,8 +68,14 @@ function AddTour() {
     },
   });
 
-  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => { 
+
+    const tourData = {
+      ...data,
+      startDate:formatISO(data.startDate),
+      endDate:formatISO(data.endDate)
+    }
+    console.log(tourData);
   };
   return (
     <div className="w-full max-w-4xl mx-auto px-5 mt-16">
