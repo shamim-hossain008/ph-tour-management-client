@@ -1,3 +1,4 @@
+import MultipleImageUploader from "@/components/MultipleImageUploader";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -31,14 +32,22 @@ import {
 } from "@/components/ui/select";
 
 import { Textarea } from "@/components/ui/textarea";
+import type { FileMetadata } from "@/hooks/use-file-upload";
 import { cn } from "@/lib/utils";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
-import { useGetTourTypeQuery } from "@/redux/features/Tour/tour.api";
+import {
+  useAddTourMutation,
+  useGetTourTypeQuery,
+} from "@/redux/features/Tour/tour.api";
 import { format, formatISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 function AddTour() {
+  const [images, setImages] = useState<File[] | (File | FileMetadata)[]>([]);
+  const [addTour] = useAddTourMutation();
+
   const { data: tourTypeData, isLoading: divisionLoading } =
     useGetTourTypeQuery(undefined);
   const { data: divisionData } = useGetDivisionsQuery(undefined);
@@ -65,17 +74,32 @@ function AddTour() {
       description: "",
       startDate: "",
       endDate: "",
+      minAge: "",
+      maxGuest: "",
     },
   });
 
-  const handleSubmit: SubmitHandler<FieldValues> = async (data) => { 
-
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
     const tourData = {
       ...data,
-      startDate:formatISO(data.startDate),
-      endDate:formatISO(data.endDate)
+      startDate: formatISO(data.startDate),
+      endDate: formatISO(data.endDate),
+      minAge: Number(data.minAge),
+      maxGuest: Number(data.maxGuest),
+    };
+
+    const formData = new FormData();
+
+    formData.append("data", JSON.stringify(tourData));
+    images.forEach((image) => formData.append("files", image as File));
+
+    try {
+      const res = await addTour(formData).unwrap();
+
+      console.log(res);
+    } catch (error) {
+      console.error("Form catch", error);
     }
-    console.log(tourData);
   };
   return (
     <div className="w-full max-w-4xl mx-auto px-5 mt-16">
@@ -304,8 +328,9 @@ function AddTour() {
                     </FormItem>
                   )}
                 />
+                {/* ********** Image Uploader************* */}
                 <div className="flex-1 mt-5">
-                  {/* <MultipleImageUploader onChange={setImages} /> */}
+                  <MultipleImageUploader onChange={setImages} />
                 </div>
               </div>
               <div className="border-t border-muted w-full "></div>
