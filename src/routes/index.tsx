@@ -7,6 +7,10 @@ import Verify from "@/pages/Verify";
 import { generateRoutes } from "@/utils/generateRoutes";
 
 import { role } from "@/constants/role";
+import Booking from "@/pages/Booking";
+import HomePage from "@/pages/HomePage";
+import TourDetails from "@/pages/TourDetails";
+import Tours from "@/pages/Tours";
 import Unauthorized from "@/pages/Unauthorized";
 import type { TRole } from "@/types";
 import { withAuth } from "@/utils/withAuth";
@@ -20,8 +24,24 @@ export const router = createBrowserRouter([
     path: "/",
     children: [
       {
-        Component: withAuth(About),
+        Component: HomePage,
+        index: true,
+      },
+      {
+        Component: About,
         path: "about",
+      },
+      {
+        Component: Tours,
+        path: "tours",
+      },
+      {
+        Component: TourDetails,
+        path: "tours/:id",
+      },
+      {
+        Component: withAuth(Booking),
+        path: "booking/:id",
       },
     ],
   },
