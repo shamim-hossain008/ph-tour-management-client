@@ -8,7 +8,7 @@ export const tourApi = baseApi.injectEndpoints({
       query: (tourData) => ({
         url: "/tour/create",
         method: "POST",
-        data: tourData,
+        body: tourData,
       }),
       invalidatesTags: ["TOUR"],
     }),
@@ -18,7 +18,7 @@ export const tourApi = baseApi.injectEndpoints({
       query: (tourTypeName) => ({
         url: "/tour/create-tour-type",
         method: "POST",
-        data: tourTypeName,
+        body: tourTypeName,
       }),
       invalidatesTags: ["TOUR"],
     }),

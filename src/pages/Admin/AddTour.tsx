@@ -48,6 +48,7 @@ import {
   type FieldValues,
   type SubmitHandler,
 } from "react-hook-form";
+import { toast } from "sonner";
 
 function AddTour() {
   const [images, setImages] = useState<File[] | (File | FileMetadata)[]>([]);
@@ -129,32 +130,39 @@ function AddTour() {
   });
 
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const tourData = {
-      ...data,
-      startDate: formatISO(data.startDate),
-      endDate: formatISO(data.endDate),
-      minAge: Number(data.minAge),
-      maxGuest: Number(data.maxGuest),
-      included: data.included.map((item: { value: string }) => item.value),
-      excluded: data.excluded.map((item: { value: string }) => item.value),
-      amenities: data.amenities.map((item: { value: string }) => item.value),
-      tourPlan: data.tourPlan.map((item: { value: string }) => item.value),
-    };
+    try {
+      const tourData = {
+        ...data,
+        startDate: formatISO(data.startDate),
+        endDate: formatISO(data.endDate),
+        minAge: Number(data.minAge),
+        maxGuest: Number(data.maxGuest),
+        costFrom: Number(data.costFrom),
+        included: data.included.map((item: { value: string }) => item.value),
+        excluded: data.excluded.map((item: { value: string }) => item.value),
+        amenities: data.amenities.map((item: { value: string }) => item.value),
+        tourPlan: data.tourPlan.map((item: { value: string }) => item.value),
+      };
 
-    console.log("handle data", tourData);
+      console.log("handle data", tourData);
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    formData.append("data", JSON.stringify(tourData));
-    images.forEach((image) => formData.append("files", image as File));
+      formData.append("data", JSON.stringify(tourData));
+      images.forEach((image) => formData.append("files", image as File));
 
-    // try {
-    //   const res = await addTour(formData).unwrap();
+      const res = await addTour(formData).unwrap();
 
-    //   console.log(res);
-    // } catch (error) {
-    //   console.error("Form catch", error);
-    // }
+      if (res.success) {
+        toast.success("Tour create successfully.");
+        form.reset();
+        setImages([]);
+      }
+      console.log(res);
+    } catch (error) {
+      console.error("Form catch", error);
+      toast.error("Something went wrong while creating the tour.");
+    }
   };
   return (
     <div className="w-full max-w-4xl mx-auto px-5 mt-16">
