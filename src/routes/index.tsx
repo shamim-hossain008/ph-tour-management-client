@@ -9,6 +9,8 @@ import { generateRoutes } from "@/utils/generateRoutes";
 import { role } from "@/constants/role";
 import Booking from "@/pages/Booking";
 import HomePage from "@/pages/HomePage";
+import Fail from "@/pages/Payment/Fail";
+import Success from "@/pages/Payment/Success";
 import TourDetails from "@/pages/TourDetails";
 import Tours from "@/pages/Tours";
 import Unauthorized from "@/pages/Unauthorized";
@@ -79,5 +81,10 @@ export const router = createBrowserRouter([
   {
     Component: Unauthorized,
     path: "/unauthorized",
+  },
+  { Component: Success, path: "/payment/success" },
+  {
+    Component: Fail,
+    path: "/payment/fail",
   },
 ]);
