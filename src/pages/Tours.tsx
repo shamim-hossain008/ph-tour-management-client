@@ -9,7 +9,6 @@ export default function Tours() {
 
   const division = searchParams.get("division") || undefined;
   const tourType = searchParams.get("tourType") || undefined;
-
   const { data } = useGetAllToursQuery({ division, tourType });
 
   return (

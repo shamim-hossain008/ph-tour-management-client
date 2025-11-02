@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,15 +11,15 @@ import {
 } from "@/components/ui/select";
 import { useGetDivisionsQuery } from "@/redux/features/division/division.api";
 
+import { useGetTourTypeQuery } from "@/redux/features/Tour/tour.api";
 import { useSearchParams } from "react-router";
-import { useGetTourTypeQuery } from '@/redux/features/Tour/tour.api';
-
 
 export default function TourFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
-
+ 
   const selectedDivision = searchParams.get("division") || undefined;
   const selectedTourType = searchParams.get("tourType") || undefined;
+ 
 
   const { data: divisionData, isLoading: divisionIsLoading } =
     useGetDivisionsQuery(undefined);
