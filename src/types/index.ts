@@ -1,13 +1,16 @@
 import type { ComponentType } from "react";
-export type { ISendOtp, IVerifyOtp, ILogin } from "./auth.type";
-export type { ITourPackage } from "./tour.types"
-
+export type { ILogin, ISendOtp, IVerifyOtp } from "./auth.type";
+export type { ITourPackage } from "./tour.types";
 
 export interface IResponse<T> {
   statusCode: number;
   success: boolean;
   message: string;
   data: T;
+}
+
+export interface TAddTourTypeForm {
+  name: string;
 }
 
 export interface ISidebarItem {

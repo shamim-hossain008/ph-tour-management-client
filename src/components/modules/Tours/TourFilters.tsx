@@ -16,10 +16,9 @@ import { useSearchParams } from "react-router";
 
 export default function TourFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
- 
+
   const selectedDivision = searchParams.get("division") || undefined;
   const selectedTourType = searchParams.get("tourType") || undefined;
- 
 
   const { data: divisionData, isLoading: divisionIsLoading } =
     useGetDivisionsQuery(undefined);

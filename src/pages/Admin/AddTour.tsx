@@ -65,13 +65,12 @@ function AddTour() {
     })
   );
 
-  const tourTypeOptions = tourTypeData?.data?.map(
-    (tourType: { _id: string; name: string }) => ({
-      value: tourType._id,
-      label: tourType.name,
-    })
-  );
-
+  const tourTypeOptions = Array.isArray(tourTypeData?.data?.data)
+    ? tourTypeData.data.data.map((tourType: { _id: string; name: string }) => ({
+        value: tourType._id,
+        label: tourType.name,
+      }))
+    : [];
   const form = useForm({
     defaultValues: {
       title: "",

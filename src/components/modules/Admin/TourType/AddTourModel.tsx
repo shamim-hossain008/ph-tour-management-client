@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,6 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAddTourTypeMutation } from "@/redux/features/Tour/tour.api";
 import type { TAddTourTypeForm } from "@/types";
+
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -30,14 +32,21 @@ export function AddTourModel() {
   const [addTourType] = useAddTourTypeMutation();
 
   const onSubmit = async (data: TAddTourTypeForm) => {
-    const res = await addTourType({ name: data?.name }).unwrap();
+    try {
+      const res = await addTourType({ name: data.name }).unwrap();
 
-    if (res.success) {
-      toast.success("Tour Type Added");
-      form.reset();
+      if (res?.success || res?._id) {
+        toast.success("Tour Type Added");
+        form.reset();
+      } else {
+        toast.error("Failed to add tour type");
+      }
+    } catch (error: any) {
+      console.error("Add Tour Type Error:", error);
+      toast.error(error?.data?.message || "Something went wrong!");
     }
-    console.log(data);
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
